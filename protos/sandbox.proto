@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package sandbox;
+
+service SandboxService {
+  // Execute Python code in isolated environment
+  rpc Execute(ExecuteRequest) returns (ExecuteResponse);
+
+  // Health check
+  rpc HealthCheck(Empty) returns (HealthResponse);
+}
+
+message Empty {}
+
+message ExecuteRequest {
+  string code = 1;
+  int32 timeout_seconds = 2;  // default 30
+}
+
+message ExecuteResponse {
+  bool success = 1;
+  string logs = 2;            // stdout logs
+  string result_json = 3;     // JSON serialized result
+  string image_base64 = 4;    // Chart image (PNG -> Base64)
+  string error = 5;           // Error message if any
+  float execution_time = 6;
+}
+
+message HealthResponse {
+  bool healthy = 1;
+  string version = 2;
+}

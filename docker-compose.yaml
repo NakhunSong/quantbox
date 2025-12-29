@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  sandbox:
+    build:
+      context: .
+      dockerfile: apps/sandbox-worker/Dockerfile
+    ports:
+      - "50051:50051"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  main-api:
+    build:
+      context: .
+      dockerfile: apps/main-api/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - SANDBOX_HOST=sandbox:50051
+      - KIMI_API_KEY=${KIMI_API_KEY}
+      - KIMI_BASE_URL=${KIMI_BASE_URL}
+    depends_on:
+      - sandbox
+    restart: unless-stopped
