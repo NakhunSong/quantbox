@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sandbox-service
+  namespace: quantbox
+spec:
+  selector:
+    app: sandbox
+  ports:
+    - port: 50051
+      targetPort: 50051
+  type: ClusterIP  # Internal communication only

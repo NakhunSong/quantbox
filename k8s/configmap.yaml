@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quantbox-config
+  namespace: quantbox
+data:
+  SANDBOX_HOST: "sandbox-service:50051"
+  KIMI_BASE_URL: "https://api.moonshot.ai/v1"

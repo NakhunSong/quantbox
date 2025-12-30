@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-api
+  namespace: quantbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: main-api
+  template:
+    metadata:
+      labels:
+        app: main-api
+    spec:
+      containers:
+        - name: main-api
+          image: quant-ai/main-api:latest
+          imagePullPolicy: Never  # Minikube local image
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: quantbox-config
+            - secretRef:
+                name: quantbox-secret
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
