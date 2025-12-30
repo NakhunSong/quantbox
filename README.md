@@ -49,8 +49,38 @@ open http://localhost:8000
 │   └── sandbox-worker/    # gRPC server for code execution
 ├── protos/
 │   └── sandbox.proto      # gRPC protocol definition
+├── k8s/                   # Kubernetes manifests
 └── docker-compose.yaml
 ```
+
+## Kubernetes (Minikube) Deployment
+
+```bash
+# 1. Start minikube
+make k8s-setup
+
+# 2. Build images in minikube
+make k8s-build
+
+# 3. Deploy (reads API key from .env)
+make k8s-deploy
+
+# 4. Get service URL
+make k8s-url
+```
+
+### K8s Commands
+
+| Command | Description |
+|---------|-------------|
+| `make k8s-setup` | Start minikube |
+| `make k8s-build` | Build images in minikube |
+| `make k8s-deploy` | Deploy all resources |
+| `make k8s-status` | Check pod/service status |
+| `make k8s-logs-api` | View main-api logs |
+| `make k8s-logs-sandbox` | View sandbox logs |
+| `make k8s-url` | Get service URL |
+| `make k8s-clean` | Delete namespace |
 
 ## Environment Variables
 
